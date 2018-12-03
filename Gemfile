@@ -33,6 +33,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'factory_bot_rails', '~> 4.0'
 gem 'geokit-rails'
 gem 'httparty'
+gem 'postcodes_io'
 gem 'rubocop'
 
 group :development, :test do
