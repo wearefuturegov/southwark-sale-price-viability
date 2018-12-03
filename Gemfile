@@ -31,6 +31,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'rack-cors'
 
 gem 'activerecord-postgis-adapter'
+gem 'factory_bot_rails', '~> 4.0'
+gem 'rgeo'
 gem 'rubocop'
 
 group :development, :test do
