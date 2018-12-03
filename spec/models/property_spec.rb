@@ -29,4 +29,21 @@ RSpec.describe Property, type: :model do
     end
   end
 
+  context 'fetch_sq_mt' do
+    before do
+      stub_request(:get, %r{https:\/\/epc\.opendatacommunities\.org\/api\/v1\/domestic\/search}).
+        to_return(status: 200,
+                  body: { rows: [{ 'total-floor-area' => 1_234_5 }] }.to_json,
+                  headers: { content_type: 'application/json' }
+                 )
+    end
+
+    let(:property) { FactoryBot.create(:property, sq_mt: nil) }
+
+    it 'fetches the property size' do
+      property.reload
+      expect(property.sq_mt).to eq(1_234_5)
+    end
+  end
+
 end

@@ -6,7 +6,7 @@ class Property < ApplicationRecord
                    lat_column_name: :lat,
                    lng_column_name: :lng
 
-  after_create :fetch_latlng
+  after_create :fetch_latlng, :fetch_sq_mt
   def nearby
     Property.within(1, origin: self).where.not(id: id)
   end
@@ -18,5 +18,12 @@ class Property < ApplicationRecord
 
     response = Postcodes::IO.new.lookup(postcode)
     update_attributes(lat: response.latitude, lng: response.longitude)
+  end
+
+  def fetch_sq_mt
+    return nil if sq_mt.present?
+
+    response = EnergyPerformance.new(pao, sao, postcode).report
+    update_attributes(sq_mt: response['total-floor-area'])
   end
 end
