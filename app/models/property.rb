@@ -7,6 +7,19 @@ class Property < ApplicationRecord
                    lng_column_name: :lng
 
   after_create :fetch_latlng, :fetch_sq_mt
+
+  def self.create_from_csv_row(row)
+    create(
+      pao: row[8],
+      sao: row[7],
+      street: row[9],
+      locality: row[10],
+      town: row[11],
+      postcode: row[3],
+      price_paid: row[1]
+    )
+  end
+
   def nearby
     Property.within(1, origin: self).where.not(id: id)
   end

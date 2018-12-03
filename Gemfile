@@ -42,6 +42,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'random-location'
   gem 'rspec-rails'
+  gem 'timecop'
   gem 'webmock'
 end
 

@@ -14,11 +14,7 @@ RSpec.describe Property, type: :model do
     end
   end
 
-  context 'fetch_latlng' do
-    before do
-      stub_request(:get, 'https://api.postcodes.io/postcodes/SW1A1AA')
-        .to_return(body: { result: { latitude: '51.501009', longitude: '-0.141588' } }.to_json)
-    end
+  context 'fetch_latlng', :stub_postcode do
 
     let(:property) { FactoryBot.create(:property, postcode: 'SW1A1AA', lat: nil, lng: nil) }
 
@@ -29,20 +25,46 @@ RSpec.describe Property, type: :model do
     end
   end
 
-  context 'fetch_sq_mt' do
-    before do
-      stub_request(:get, %r{https:\/\/epc\.opendatacommunities\.org\/api\/v1\/domestic\/search}).
-        to_return(status: 200,
-                  body: { rows: [{ 'total-floor-area' => 1_234_5 }] }.to_json,
-                  headers: { content_type: 'application/json' }
-                 )
-    end
-
+  context 'fetch_sq_mt', :stub_epc do
     let(:property) { FactoryBot.create(:property, sq_mt: nil) }
 
     it 'fetches the property size' do
       property.reload
       expect(property.sq_mt).to eq(1_234_5)
+    end
+  end
+
+  context '#create_from_csv_row', :stub_postcode, :stub_epc do
+    let(:csv_row) do
+      [
+        '773788C3-3E9D-2CE4-E053-6C04A8C05E57',
+        '410000',
+        '2018-06-25',
+        'NW9 4AD',
+        'F',
+        'Y',
+        'L',
+        'FLAT 1',
+        '35',
+        'COXWELL BOULEVARD',
+        '',
+        'LONDON',
+        'SOUTHWARK',
+        'GREATER LONDON',
+        'A',
+        'http://landregistry.data.gov.uk/data/ppi/transaction/773788C3-3E9D-2CE4-E053-6C04A8C05E57/current'
+      ]
+    end
+
+    let(:property) { Property.create_from_csv_row(csv_row) }
+
+    it 'creates when given a CSV row' do
+      expect(property.sao).to eq('FLAT 1')
+      expect(property.pao).to eq('35')
+      expect(property.street).to eq('COXWELL BOULEVARD')
+      expect(property.locality).to eq('')
+      expect(property.town).to eq('LONDON')
+      expect(property.postcode).to eq('NW9 4AD')
     end
   end
 
