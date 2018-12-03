@@ -15,11 +15,8 @@
 # gem 'pg'
 #
 default: &default
-  adapter: postgis
+  adapter: postgresql
   encoding: unicode
-  postgis_extension: postgis
-  postgis_schema: public
-  schema_search_path: public,postgis
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>

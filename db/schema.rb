@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 2018_12_03_112702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "postgis"
 
   create_table "properties", force: :cascade do |t|
     t.string "pao"
@@ -23,7 +22,8 @@ ActiveRecord::Schema.define(version: 2018_12_03_112702) do
     t.string "locality"
     t.string "town"
     t.string "postcode"
-    t.geometry "latlng", limit: {:srid=>0, :type=>"st_point"}
+    t.float "lat"
+    t.float "lng"
     t.integer "price_paid"
     t.integer "sq_mt"
     t.datetime "created_at", null: false

@@ -9,7 +9,8 @@ class CreateProperties < ActiveRecord::Migration[5.2]
       t.string :locality
       t.string :town
       t.string :postcode
-      t.st_point :latlng
+      t.float :lat
+      t.float :lng
       t.integer :price_paid
       t.integer :sq_mt
 
