@@ -1,1 +1,8 @@
 inherit_from: .rubocop_todo.yml
+
+Lint/LiteralInInterpolation:
+  Enabled: false
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
