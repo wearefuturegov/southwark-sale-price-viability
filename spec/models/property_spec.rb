@@ -26,11 +26,16 @@ RSpec.describe Property, type: :model do
   end
 
   context 'fetch_sq_mt', :stub_epc do
-    let(:property) { FactoryBot.create(:property, sq_mt: nil) }
+    let(:property) { FactoryBot.create(:property, sq_mt: nil, price_paid: 1_234_50) }
 
     it 'fetches the property size' do
       property.reload
       expect(property.sq_mt).to eq(1_234_5)
+    end
+
+    it 'sets the price per square metres' do
+      property.reload
+      expect(property.price_per_sq_mt).to eq(10)
     end
   end
 

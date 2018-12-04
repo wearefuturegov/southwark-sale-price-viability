@@ -37,6 +37,12 @@ class Property < ApplicationRecord
     return nil if sq_mt.present?
 
     response = EnergyPerformance.new(pao, sao, postcode).report
-    update_attributes(sq_mt: response['total-floor-area']) unless response.nil?
+
+    return nil if response.nil?
+
+    update_attributes(
+      sq_mt: response['total-floor-area'],
+      price_per_sq_mt: (price_paid / response['total-floor-area'])
+    )
   end
 end
