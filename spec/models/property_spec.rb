@@ -15,7 +15,6 @@ RSpec.describe Property, type: :model do
   end
 
   context 'fetch_latlng', :stub_postcode do
-
     let(:property) { FactoryBot.create(:property, postcode: 'SW1A1AA', lat: nil, lng: nil) }
 
     it 'fetches the latlng' do
@@ -72,7 +71,7 @@ RSpec.describe Property, type: :model do
       expect(property.postcode).to eq('NW9 4AD')
     end
   end
-  
+
   context 'statistics' do
     let(:property) { FactoryBot.create(:property, price_per_sq_mt: 4000) }
     let(:latlng) { [property.lat, property.lng] }
@@ -97,5 +96,4 @@ RSpec.describe Property, type: :model do
       end
     end
   end
-
 end

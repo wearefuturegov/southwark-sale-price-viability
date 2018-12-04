@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
-
   describe '#expected_range' do
     let(:property) { FactoryBot.create(:property, price_per_sq_mt: 4000) }
     let(:latlng) { RandomLocation.near_by(property.lat, property.lng, 160.93) }
@@ -25,5 +26,4 @@ RSpec.describe ApplicationController, type: :controller do
       expect(json['expected']).to eq(false)
     end
   end
-
 end

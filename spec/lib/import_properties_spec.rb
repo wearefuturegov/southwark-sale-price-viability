@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require Rails.root.join('lib', 'import_properties')
 
 RSpec.describe ImportProperties, type: :model, stub_land_reg: true, stub_epc: true, stub_postcode: true do
-
   before do
     Timecop.freeze(Time.parse('01-01-2018'))
     ImportProperties.instance.perform

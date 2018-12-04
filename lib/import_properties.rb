@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ImportProperties
   include Singleton
   include HTTParty
@@ -17,7 +19,7 @@ class ImportProperties
     self.class.get('/app/ppd/ppd_data.csv', query: query)
   end
 
-  def query
+  def query # rubocop:disable Metrics/MethodLength
     {
       district: 'Southwark',
       et: estate_types,
@@ -36,7 +38,7 @@ class ImportProperties
   end
 
   def min_date
-    format_date(DateTime.now - 1.year)
+    format_date(Time.zone.now - 1.year)
   end
 
   def format_date(date)
