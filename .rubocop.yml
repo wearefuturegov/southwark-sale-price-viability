@@ -9,7 +9,8 @@ Style/Documentation:
 AllCops:
   Exclude:
     - 'db/**/*'
-
+    - 'vendor/**/*'
+    
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
