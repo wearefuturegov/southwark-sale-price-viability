@@ -30,7 +30,7 @@ class Property < ApplicationRecord
     return nil if lat.present? && lng.present?
 
     response = Postcodes::IO.new.lookup(postcode)
-    update_attributes(lat: response.latitude, lng: response.longitude)
+    update_attributes(lat: response.latitude, lng: response.longitude) unless response.nil?
   end
 
   def fetch_sq_mt
