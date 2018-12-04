@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
 
   def in_expected_range?(sale_price, size, latlng)
     price_estimate = Property.average_price_for_area(latlng) * size
-    range = (Property.range_for_area(latlng) * size / 2)
-    sale_price < price_estimate - range || sale_price < price_estimate + range
+    padding = (Property.range_for_area(latlng) * size / 2)
+    sale_price < price_estimate - padding || sale_price < price_estimate + padding
   end
 end
