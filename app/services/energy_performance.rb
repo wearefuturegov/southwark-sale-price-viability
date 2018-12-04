@@ -5,7 +5,7 @@ class EnergyPerformance
   base_uri 'https://epc.opendatacommunities.org/'
 
   def initialize(paon, saon, postcode)
-    @address = [paon, saon].join('')
+    @address = [saon, paon].join(' ')
     @postcode = postcode
   end
 
