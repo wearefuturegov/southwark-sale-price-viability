@@ -72,9 +72,10 @@ RSpec.describe Property, type: :model do
       expect(property.postcode).to eq('NW9 4AD')
     end
   end
-
-  context '#average_price_for_area' do
+  
+  context 'statistics' do
     let(:property) { FactoryBot.create(:property, price_per_sq_mt: 4000) }
+    let(:latlng) { [property.lat, property.lng] }
 
     before do
       FactoryBot.create(:property, :close_to, price_per_sq_mt: 3200, source_property: property)
@@ -84,10 +85,17 @@ RSpec.describe Property, type: :model do
       FactoryBot.create(:property, :far_away, price_per_sq_mt: 9000, source_property: property)
     end
 
-    it 'gets an average' do
-      expect(Property.average_price_for_area([property.lat, property.lng])).to eq(3612.5)
+    describe '#average_price_for_area' do
+      it 'gets an average' do
+        expect(Property.average_price_for_area(latlng)).to eq(3612.5)
+      end
     end
 
+    context '#range_for_area' do
+      it 'gets the range' do
+        expect(Property.range_for_area(latlng)).to eq(1250)
+      end
+    end
   end
 
 end

@@ -8,7 +8,13 @@ class Property < ApplicationRecord
 
   after_create :fetch_latlng, :fetch_sq_mt
 
-  scope :average_price_for_area, ->(latlng) { within(1, origin: latlng).average(:price_per_sq_mt).to_f }
+  scope :properties_within, ->(latlng) { within(1, origin: latlng) }
+  scope :average_price_for_area, ->(latlng) { properties_within(latlng).average(:price_per_sq_mt).to_f }
+
+  def self.range_for_area(latlng)
+    properties = properties_within(latlng)
+    properties.maximum(:price_per_sq_mt) - properties.minimum(:price_per_sq_mt)
+  end
 
   def self.create_from_csv_row(row)
     create(
