@@ -73,4 +73,21 @@ RSpec.describe Property, type: :model do
     end
   end
 
+  context '#average_price_for_area' do
+    let(:property) { FactoryBot.create(:property, price_per_sq_mt: 4000) }
+
+    before do
+      FactoryBot.create(:property, :close_to, price_per_sq_mt: 3200, source_property: property)
+      FactoryBot.create(:property, :close_to, price_per_sq_mt: 3000, source_property: property)
+      FactoryBot.create(:property, :close_to, price_per_sq_mt: 4250, source_property: property)
+      FactoryBot.create(:property, :far_away, price_per_sq_mt: 7000, source_property: property)
+      FactoryBot.create(:property, :far_away, price_per_sq_mt: 9000, source_property: property)
+    end
+
+    it 'gets an average' do
+      expect(Property.average_price_for_area([property.lat, property.lng])).to eq(3612.5)
+    end
+
+  end
+
 end

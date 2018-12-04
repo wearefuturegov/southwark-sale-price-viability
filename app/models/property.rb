@@ -8,6 +8,8 @@ class Property < ApplicationRecord
 
   after_create :fetch_latlng, :fetch_sq_mt
 
+  scope :average_price_for_area, ->(latlng) { within(1, origin: latlng).average(:price_per_sq_mt).to_f }
+
   def self.create_from_csv_row(row)
     create(
       pao: row[8],
