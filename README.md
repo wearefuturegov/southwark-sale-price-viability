@@ -1,24 +1,54 @@
-# README
+# Southwark Sale Price Viability
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A microservice that attempts to tell if a developer's sales value for a
+proposed development is realistic.
 
-Things you may want to cover:
+[![CircleCI](https://circleci.com/gh/wearefuturegov/southwark-sale-price-viability.svg?style=svg)](https://circleci.com/gh/wearefuturegov/southwark-sale-price-viability)
 
-* Ruby version
+## Installing
 
-* System dependencies
+Clone the repo:
 
-* Configuration
+```
+git clone https://github.com/wearefuturegov/southwark-sale-price-viability.git
+```
 
-* Database creation
+Install the dependencies:
 
-* Database initialization
+```
+bundle install
+```
 
-* How to run the test suite
+Import the data:
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+bundle exec rake properties:import
+```
 
-* Deployment instructions
+(This may take 10 minutes or so)
 
-* ...
+Spin up the server:
+
+```
+bundle exec rails s
+```
+
+## Using the API
+
+There is a single endpoint, that responds to a GET request:
+
+```
+http://localhost:3000/expected_range?lat={latitude_of_development}&lng={longitude_of_development}&sale_price={expected_sale_price}&size={size_in_square_metres}
+```
+
+This then returns JSON in the format:
+
+```JSON
+{ "expected": true }
+```
+
+or
+
+```JSON
+{ "expected": false }
+```
