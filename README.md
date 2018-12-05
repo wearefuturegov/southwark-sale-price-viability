@@ -1,7 +1,7 @@
 # Southwark Sale Price Viability
 
-A microservice that attempts to tell if a developer's sales value for a
-proposed development is realistic.
+A microservice that attempts to tell if developer's sales values that go into a
+planning viability assessment are in the expected range
 
 [![CircleCI](https://circleci.com/gh/wearefuturegov/southwark-sale-price-viability.svg?style=svg)](https://circleci.com/gh/wearefuturegov/southwark-sale-price-viability)
 
