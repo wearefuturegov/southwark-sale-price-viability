@@ -19,9 +19,9 @@ class Histogram
 
   def set_variables(num_bins, bin_step)
     num_bins.times.each do |i|
-      bottom = bin_step * i
-      top = bottom + 1000
-      range = (bottom + 1..top)
+      min = bin_step * i
+      max = min + bin_step
+      range = (min + 1..max)
       @histogram[range] = 0
       @ranges << range
     end
