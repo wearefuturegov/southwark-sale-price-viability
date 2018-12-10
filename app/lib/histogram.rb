@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Histogram
   def initialize(values, num_bins = 20, bin_step = 1000)
     @ranges = []
