@@ -8,11 +8,11 @@ class Property < ApplicationRecord
 
   after_create :fetch_latlng, :fetch_sq_mt
 
-  scope :properties_within, ->(latlng) { within(1, origin: latlng) }
-  scope :average_price_for_area, ->(latlng) { properties_within(latlng).average(:price_per_sq_mt).to_f }
+  scope :within_area, ->(latlng) { within(1, origin: latlng) }
+  scope :average_price_for_area, ->(latlng) { within_area(latlng).average(:price_per_sq_mt).to_f }
 
   def self.range_for_area(latlng)
-    properties = properties_within(latlng)
+    properties = within_area(latlng)
     properties.maximum(:price_per_sq_mt) - properties.minimum(:price_per_sq_mt)
   end
 
@@ -29,7 +29,7 @@ class Property < ApplicationRecord
   end
 
   def nearby
-    Property.within(1, origin: self).where.not(id: id)
+    Property.within_area([lat, lng]).where.not(id: id)
   end
 
   private
