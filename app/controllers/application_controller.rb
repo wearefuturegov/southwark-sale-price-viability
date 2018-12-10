@@ -13,7 +13,8 @@ class ApplicationController < ActionController::API
       expected: in_expected_range?(params[:sale_price].to_f, params[:size].to_f),
       max_price_per_sq_mt: max_price_per_sq_mt,
       min_price_per_sq_mt: min_price_per_sq_mt,
-      properties: @properties.map(&:as_json)
+      properties: @properties.map(&:as_json),
+      histogram: @properties.histogram
     }
   end
 

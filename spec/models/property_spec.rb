@@ -95,5 +95,15 @@ RSpec.describe Property, type: :model do
         expect(Property.range_for_area(latlng)).to eq(1250)
       end
     end
+
+    context '#histogram' do
+      it 'generates a histogram' do
+        histogram = Property.histogram
+        expect(histogram[2001..3000]).to eq(1)
+        expect(histogram[3001..4000]).to eq(2)
+        expect(histogram[6001..7000]).to eq(1)
+        expect(histogram[8001..9000]).to eq(1)
+      end
+    end
   end
 end

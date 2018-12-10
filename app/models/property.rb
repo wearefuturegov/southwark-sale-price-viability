@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative '../lib/histogram'
 
 class Property < ApplicationRecord
   acts_as_mappable default_units: :miles,
@@ -26,6 +27,10 @@ class Property < ApplicationRecord
       postcode: row[3],
       price_paid: row[1]
     )
+  end
+
+  def self.histogram
+    Histogram.new(pluck(:price_per_sq_mt)).results
   end
 
   def nearby
