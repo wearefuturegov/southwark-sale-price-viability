@@ -1,9 +1,9 @@
 class Histogram
-  def initialize(values)
+  def initialize(values, num_bins = 20, bin_step = 1000)
     @ranges = []
     @histogram = {}
     @values = values
-    set_variables
+    set_variables(num_bins, bin_step)
   end
 
   def results
@@ -15,9 +15,9 @@ class Histogram
     @histogram
   end
 
-  def set_variables
-    20.times.each do |i|
-      bottom = 1000 * i
+  def set_variables(num_bins, bin_step)
+    num_bins.times.each do |i|
+      bottom = bin_step * i
       top = bottom + 1000
       range = (bottom + 1..top)
       @histogram[range] = 0
