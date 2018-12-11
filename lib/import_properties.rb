@@ -20,7 +20,7 @@ class ImportProperties
   end
 
   def csv
-    CSV.parse(response.body)
+    @csv ||= CSV.parse(response.body)
   end
 
   def response
