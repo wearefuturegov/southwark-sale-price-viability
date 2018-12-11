@@ -22,7 +22,7 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     it 'returns false if expected price is not in the range' do
-      get :expected_range, params: { lat: latlng[0], lng: latlng[1], sale_price: 5_000_000, size: 1000 }
+      get :expected_range, params: { lat: latlng[0], lng: latlng[1], sale_price: 10_000_000, size: 1000 }
       expect(json['expected']).to eq(false)
     end
   end

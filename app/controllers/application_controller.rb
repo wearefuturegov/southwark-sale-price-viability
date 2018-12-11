@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::API
   def expected_range
     @properties = Property.where.not(price_per_sq_mt: nil).within_area([params[:lat].to_f, params[:lng].to_f])
+    @histogram = @properties.histogram
     render json: json_response
   end
 
@@ -14,21 +15,32 @@ class ApplicationController < ActionController::API
       max_price_per_sq_mt: max_price_per_sq_mt,
       min_price_per_sq_mt: min_price_per_sq_mt,
       properties: @properties.map(&:as_json),
-      histogram: @properties.histogram
+      histogram: @histogram
     }
   end
 
   def in_expected_range?(sale_price, size)
-    max_price = max_price_per_sq_mt * size
-    min_price = min_price_per_sq_mt * size
-    sale_price.between?(min_price + (min_price * 0.05), max_price + (max_price * 0.05))
+    range = (max_price_per_sq_mt...min_price_per_sq_mt)
+    price_per_sq_mt = sale_price.to_f / size.to_f
+    range.include?(price_per_sq_mt)
   end
 
   def max_price_per_sq_mt
-    @properties.maximum(:price_per_sq_mt).round
+    trimmed_histogram.keys.first.first
   end
 
   def min_price_per_sq_mt
-    @properties.minimum(:price_per_sq_mt).round
+    trimmed_histogram.keys.last.last
+  end
+
+  def trimmed_histogram
+    @trimmed_histogram ||= begin
+      h = @histogram
+      h.each do |range, value|
+        percentage = value.to_f / @properties.count
+        h.delete(range) if percentage < 0.05
+      end
+      h
+    end
   end
 end
