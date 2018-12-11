@@ -50,8 +50,7 @@ class ImportProperties
       'lrcommon:detached',
       'lrcommon:semi-detached',
       'lrcommon:terraced',
-      'lrcommon:flat-maisonette',
-      'lrcommon:otherPropertyType'
+      'lrcommon:flat-maisonette'
     ]
   end
 
