@@ -54,9 +54,15 @@ class Property < ApplicationRecord
 
     return nil if response.nil?
 
+    update_size_data(response['total-floor-area'].to_f)
+  end
+
+  def update_size_data(floor_area)
+    return if floor_area == 0.0
+
     update_attributes(
-      sq_mt: response['total-floor-area'],
-      price_per_sq_mt: (price_paid / response['total-floor-area'].to_f)
+      sq_mt: floor_area,
+      price_per_sq_mt: (price_paid / floor_area)
     )
   end
 end

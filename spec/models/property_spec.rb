@@ -36,6 +36,21 @@ RSpec.describe Property, type: :model do
       property.reload
       expect(property.price_per_sq_mt).to eq(10)
     end
+
+    context 'if area is not specified' do
+      before do
+        stub_request(:get, %r{https:\/\/epc\.opendatacommunities\.org\/api\/v1\/domestic\/search})
+          .to_return(status: 200,
+                     body: { rows: [{ 'total-floor-area' => nil }] }.to_json,
+                     headers: { content_type: 'application/json' })
+      end
+
+      it 'does not set values' do
+        property.reload
+        expect(property.sq_mt).to eq(nil)
+        expect(property.price_per_sq_mt).to eq(nil)
+      end
+    end
   end
 
   context '#create_from_csv_row', :stub_postcode, :stub_epc do
