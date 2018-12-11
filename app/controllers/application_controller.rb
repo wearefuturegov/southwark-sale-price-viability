@@ -25,10 +25,10 @@ class ApplicationController < ActionController::API
   end
 
   def max_price_per_sq_mt
-    @properties.maximum(:price_per_sq_mt)
+    @properties.maximum(:price_per_sq_mt).round
   end
 
   def min_price_per_sq_mt
-    @properties.minimum(:price_per_sq_mt)
+    @properties.minimum(:price_per_sq_mt).round
   end
 end
