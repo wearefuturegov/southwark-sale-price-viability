@@ -56,7 +56,7 @@ class Property < ApplicationRecord
 
     update_attributes(
       sq_mt: response['total-floor-area'],
-      price_per_sq_mt: (price_paid / response['total-floor-area'])
+      price_per_sq_mt: (price_paid / response['total-floor-area'].to_f)
     )
   end
 end
