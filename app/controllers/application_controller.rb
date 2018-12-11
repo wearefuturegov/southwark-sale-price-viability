@@ -35,7 +35,7 @@ class ApplicationController < ActionController::API
 
   def trimmed_histogram
     @trimmed_histogram ||= begin
-      h = @histogram
+      h = @histogram.dup
       h.each do |range, value|
         percentage = value.to_f / @properties.count
         h.delete(range) if percentage < 0.05
