@@ -20,16 +20,16 @@ class ApplicationController < ActionController::API
   end
 
   def in_expected_range?(sale_price, size)
-    range = (max_price_per_sq_mt...min_price_per_sq_mt)
+    range = (min_price_per_sq_mt...max_price_per_sq_mt)
     price_per_sq_mt = sale_price.to_f / size.to_f
     range.include?(price_per_sq_mt)
   end
 
-  def max_price_per_sq_mt
+  def min_price_per_sq_mt
     trimmed_histogram.keys.first.first
   end
 
-  def min_price_per_sq_mt
+  def max_price_per_sq_mt
     trimmed_histogram.keys.last.last
   end
 
